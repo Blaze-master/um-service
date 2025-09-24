@@ -1,0 +1,80 @@
+[
+  {
+    "trigger": {
+      "milestone": "goal_setting_complete",
+      "service_category": "UNITI"
+    },
+    "data": {
+      "intervention_id": "UNITI.goals_set_no_apps.UNITI.WHY",
+      "purpose": "WHY",
+      "tier": "UNITI",
+      "channel": "INAPP",
+      "template": "Congrats {name}, you've set your goals! Let's connect you with {service_category} apps to get started."
+    }
+  },
+  {
+    "trigger": {
+      "milestone": "goals_set_no_apps",
+      "service_category": "UNITI"
+    },
+    "data": {
+      "intervention_id": "UNITI.goals_set_no_apps.UNITI.WHY",
+      "purpose": "WHY",
+      "tier": "UNITI",
+      "channel": "INAPP",
+      "template": "Great job {name}! You've set your goals. Explore {service_category} apps to make progress."
+    }
+  },
+  {
+    "trigger": {
+      "milestone": "tier1_app_registered",
+      "service_category": "{service_category}"
+    },
+    "data": {
+      "intervention_id": "{service_category}.registered.TIER1.CELEBRATE",
+      "purpose": "CELEBRATE",
+      "tier": "TIER1",
+      "channel": "WA",
+      "template": "Welcome {name}! You've registered for a {service_category} app. Keep going to reach your {goal}."
+    }
+  },
+  {
+    "trigger": {
+      "milestone": "app_downloaded_no_registration",
+      "service_category": "{service_category}"
+    },
+    "data": {
+      "intervention_id": "{service_category}.app_downloaded_no_registration.TIER1.HOW",
+      "purpose": "HOW",
+      "tier": "TIER1",
+      "channel": "INAPP",
+      "template": "Hi {name}, you downloaded a {service_category} app but didn't register yet. Here's how to complete it."
+    }
+  },
+  {
+    "trigger": {
+      "milestone": "registered_no_activity",
+      "service_category": "{service_category}"
+    },
+    "data": {
+      "intervention_id": "{service_category}.registered_no_activity.TIER1.HOW",
+      "purpose": "HOW",
+      "tier": "TIER1",
+      "channel": "WA",
+      "template": "Hello {name}, we noticed you registered for a {service_category} app but haven't used it yet. Here's how to get started."
+    }
+  },
+  {
+    "trigger": {
+      "milestone": "loyal_user",
+      "service_category": "UNITI"
+    },
+    "data": {
+      "intervention_id": "UNITI.loyal_user.TIER1.TESTIMONIAL",
+      "purpose": "TESTIMONIAL",
+      "tier": "TIER1",
+      "channel": "INAPP",
+      "template": "Thanks {name}! As a loyal user, here's how {service_category} apps have helped others succeed."
+    }
+  }
+]

@@ -8,6 +8,6 @@ app = FastAPI(
 )
 
 # Include routers
-app.include_router(intervention.router, prefix="/intervention", tags=["Intervention Engine"])
-app.include_router(message.router, prefix="/message", tags=["Message Optimizer"])
-app.include_router(health.router, prefix="/health", tags=["Health"])
+app.include_router(intervention.router)
+app.include_router(message.router)
+app.include_router(health.router)

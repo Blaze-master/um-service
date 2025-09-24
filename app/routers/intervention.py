@@ -1,24 +1,29 @@
-from fastapi import APIRouter, HTTPException
+from fastapi import APIRouter
 from pydantic import BaseModel
-from app.services.intervention_service import get_intervention_for_milestone
+from typing import Optional, Dict, Any
+from app.services.intervention_service import resolve_intervention
 
-router = APIRouter()
+router = APIRouter(prefix="/interventions", tags=["Interventions"])
 
-class InterventionRequest(BaseModel):
-    milestone_id: str
-    app_name: str | None = None
 
-class InterventionResponse(BaseModel):
-    intervention_id: str
+class InterventionSelectRequest(BaseModel):
+    milestone: str
+    service_category: str
+    user_context: Optional[Dict[str, Any]] = None
 
-@router.post("/select", response_model=InterventionResponse)
-def select_intervention(req: InterventionRequest):
-    try:
-        intervention_id = get_intervention_for_milestone(req.milestone_id, req.app_name)
-    except ValueError as e:
-        raise HTTPException(status_code=400, detail=str(e))
 
-    if not intervention_id:
-        raise HTTPException(status_code=404, detail="No intervention found for milestone")
+@router.post("/select")
+def get_intervention(request: InterventionSelectRequest):
+    """
+    Given a milestone and service_category, return the matching intervention.
+    Accepts optional user_context (e.g., {"name": "Kojo", "goal": "fitness"}).
+    """
+    result = resolve_intervention(
+        milestone=request.milestone,
+        service_category=request.service_category,
+        user_context=request.user_context or {}
+    )
 
-    return {"intervention_id": intervention_id}
+    if result:
+        return {"success": True, "intervention": result}
+    return {"success": False, "error": "No matching intervention found"}
