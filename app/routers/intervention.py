@@ -3,27 +3,24 @@ from pydantic import BaseModel
 from typing import Optional, Dict, Any
 from app.services.intervention_service import resolve_intervention
 
-router = APIRouter(prefix="/interventions", tags=["Interventions"])
+router = APIRouter(prefix="/intervention", tags=["Intervention"])
 
 
 class InterventionSelectRequest(BaseModel):
-    milestone: str
-    service_category: str
-    user_context: Optional[Dict[str, Any]] = None
+  user_state: str
+  service_category: str
 
 
 @router.post("/select")
-def get_intervention(request: InterventionSelectRequest):
-    """
-    Given a milestone and service_category, return the matching intervention.
-    Accepts optional user_context (e.g., {"name": "Kojo", "goal": "fitness"}).
-    """
-    result = resolve_intervention(
-        milestone=request.milestone,
-        service_category=request.service_category,
-        user_context=request.user_context or {}
-    )
+def select_intervention(request: InterventionSelectRequest):
+  """
+  Given a user_state and service_category, return the matching intervention.
+  """
+  result = resolve_intervention(
+    user_state=request.user_state,
+    service_category=request.service_category,
+  )
 
-    if result:
-        return {"success": True, "intervention": result}
-    return {"success": False, "error": "No matching intervention found"}
+  if result:
+    return {"success": True, "intervention": result}
+  return {"success": False, "error": "No matching intervention found"}
