@@ -51,4 +51,4 @@ def llm_select_intervention(usage_data: UsageDataRequest):
     user_context={}
   ) if interventionId else None
 
-  return {"success": True, "result": result}
+  return {"success": True, "result": result, "intervention_id" : interventionId}
