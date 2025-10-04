@@ -1,0 +1,23 @@
+{
+  "phone_verification_completed": ["CELEBRATE", "REWARD"],
+  "goal_setting_started_abandoned": ["HOW", "INCENTIVE", "SUPPORT", "WHY"],
+  "goal_setting_completed": ["CELEBRATE", "REWARD"],
+  "tier1_tier2_apps_downloaded": ["CELEBRATE", "REWARD"],
+  "kyc_started_abandoned": ["HOW", "INCENTIVE", "SUPPORT", "WHY"],
+  "kyc_completed": ["CELEBRATE", "REWARD"],
+  "uniti_onboarding_completed": ["CELEBRATE", "REWARD"],
+  "tier1_app_opened_first_time": ["CELEBRATE", "REWARD"],
+  "tier2_app_opened_first_time": ["CELEBRATE", "REWARD"],
+  "tier1_app_registered": ["CELEBRATE", "REWARD"],
+  "tier2_app_registered": ["CELEBRATE", "REWARD"],
+  "tier1_app_low_activity": ["HOW", "INCENTIVE", "SUPPORT", "WHY"],
+  "tier2_app_low_activity": ["HOW", "INCENTIVE", "SUPPORT", "WHY"],
+  "tier1_app_engaged": ["CELEBRATE", "INCENTIVE", "REWARD"],
+  "tier2_app_engaged": ["CELEBRATE", "INCENTIVE", "REWARD"],
+  "tier1_app_engagement_dropoff": ["HOW", "INCENTIVE", "REACTIVATION", "WHY"],
+  "tier2_app_engagement_dropoff": ["HOW", "INCENTIVE", "REACTIVATION", "WHY"],
+  "tier1_app_retained": ["CELEBRATE", "INCENTIVE", "REWARD"],
+  "tier2_app_retained": ["CELEBRATE", "INCENTIVE", "REWARD"],
+  "tier1_app_retention_dropoff": ["HOW", "INCENTIVE", "REACTIVATION", "WHY"],
+  "tier2_app_retention_dropoff": ["HOW", "INCENTIVE", "REACTIVATION", "WHY"]
+}

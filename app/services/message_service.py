@@ -20,13 +20,26 @@ def _fill_placeholders(data: Dict[str, Any], user_context: Optional[Dict[str, An
 
   return filled
 
-def get_intervention_content(intervention_id: str, user_context: Optional[Dict[str, Any]] = None) -> Optional[Dict[str, Any]]:
+def get_intervention_content_old(intervention_id: str, user_context: Optional[Dict[str, Any]] = None) -> Optional[Dict[str, Any]]:
   """
   Retrieves the intervention content based on intervention_id.
   Fills in any placeholders using user_context (e.g., {"name": "Kojo", "goal": "fitness"}).
   """
   for entry in INTERVENTION_LIBRARY:
     if entry["data"]["intervention_id"] == intervention_id:
+      return _fill_placeholders(entry["data"], user_context)
+
+  return None
+
+def get_intervention_content(intervention_id: str, user_context: Optional[Dict[str, Any]] = None) -> Optional[Dict[str, Any]]:
+  """
+  Retrieves the intervention content based on intervention_id.
+  Fills in any placeholders using user_context (e.g., {"name": "Kojo", "goal": "fitness"}).
+  """
+  for entry in INTERVENTION_LIBRARY:
+    entry_id = entry["data"]["intervention_id"].split(".")
+    entry_id = ".".join([entry_id[0], entry_id[1], entry_id[3]])
+    if entry_id.lower() == intervention_id.lower():
       return _fill_placeholders(entry["data"], user_context)
 
   return None

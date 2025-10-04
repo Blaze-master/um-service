@@ -24,3 +24,6 @@ def resolve_intervention(user_state: str, service_category: str) -> Optional[Dic
       return entry["data"]["intervention_id"]
 
   return None
+
+def llm_intervention(usage_data: Any) -> str:
+  pass
