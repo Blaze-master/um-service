@@ -12,10 +12,20 @@ class InterventionSelectRequest(BaseModel):
   service_category: str
   user_context: Optional[Dict[str, Any]] = None
 
+
+class MilestoneRecord(BaseModel):
+  milestoneId: str
+  serviceCategory: str
+  createdAt: str
+
+class InterventionRecord(BaseModel):
+  interventionId: str
+  createdAt: str
+
 class UsageDataRequest(BaseModel):
-  current: List[Dict[str, Any]]
-  pastMilestones: List[Dict[str, Any]]
-  pastInterventions: List[Dict[str, Any]]
+  current: List[MilestoneRecord]
+  pastMilestones: List[MilestoneRecord]
+  pastInterventions: List[InterventionRecord]
 
 
 @router.post("/select")
