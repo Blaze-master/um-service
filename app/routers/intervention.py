@@ -12,6 +12,9 @@ class InterventionSelectRequest(BaseModel):
   service_category: str
   user_context: Optional[Dict[str, Any]] = None
 
+class SignalRecord(BaseModel):
+  signalId: str
+  createdAt: str
 
 class MilestoneRecord(BaseModel):
   milestoneId: str
@@ -25,6 +28,7 @@ class InterventionRecord(BaseModel):
 class UsageDataRequest(BaseModel):
   current: List[MilestoneRecord]
   pastMilestones: List[MilestoneRecord]
+  pastSignals: List[SignalRecord]
   pastInterventions: List[InterventionRecord]
 
 

@@ -1,7 +1,7 @@
 import json
 from ..config import get_settings
 from .llm_service import prompt_llm
-from ..utils.prompts import INTERVENTION_PROMPT, INTERVENTION_TYPES
+from ..utils.prompts import INTERVENTION_PROMPT, INTERVENTION_TYPES, PRIORITIZATION_GUIDELINES, ENGAGEMENT_FLOW
 from pathlib import Path
 from typing import Optional, Dict, Any
 
@@ -30,6 +30,12 @@ def resolve_intervention(user_state: str, service_category: str) -> Optional[Dic
 
 def llm_intervention(usage_data: Any) -> str:
   settings = get_settings()
-  params = {"usage_data" : usage_data, "milestone_to_intervention_types" : settings.milestones_to_intervention, "intervention_types" : INTERVENTION_TYPES}
+  params = {
+    "usage_data" : usage_data, 
+    "milestone_to_intervention_types" : settings.milestones_to_intervention, 
+    "intervention_types" : INTERVENTION_TYPES, 
+    "prioritization_guidelines" : PRIORITIZATION_GUIDELINES,
+    "engagement_flow" : ENGAGEMENT_FLOW
+    }
   intervention = prompt_llm(INTERVENTION_PROMPT,params)
   return intervention
