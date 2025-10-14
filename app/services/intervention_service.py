@@ -28,8 +28,20 @@ def resolve_intervention(user_state: str, service_category: str) -> Optional[Dic
 
   return None
 
+def get_intervention_for_reward_milestones(milestones, m_to_i):
+  reward_interventions = []
+  residual_milestones = []
+  for milestone in milestones:
+    if "REWARD" in m_to_i.get(milestone["milestoneId"], []):
+      reward_interventions.append(f"{milestone['serviceCategory']}.{milestone['milestoneId']}.REWARD")
+    else:
+      residual_milestones.append(milestone)
+  return reward_interventions, residual_milestones
+
 def llm_intervention(usage_data: Any) -> str:
   settings = get_settings()
+  interventions, residuals = get_intervention_for_reward_milestones(usage_data["current"], settings.milestones_to_intervention)
+  usage_data["current"] = residuals
   params = {
     "usage_data" : usage_data, 
     "milestone_to_intervention_types" : settings.milestones_to_intervention, 
@@ -37,5 +49,5 @@ def llm_intervention(usage_data: Any) -> str:
     "prioritization_guidelines" : PRIORITIZATION_GUIDELINES,
     "engagement_flow" : ENGAGEMENT_FLOW
     }
-  intervention = prompt_llm(INTERVENTION_PROMPT,params)
-  return intervention
+  interventions.append(prompt_llm(INTERVENTION_PROMPT,params))
+  return interventions
