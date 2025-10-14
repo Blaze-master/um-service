@@ -59,12 +59,16 @@ def select_interventions(requests: List[InterventionSelectRequest]):
 @router.post("/llm-select")
 def llm_select_intervention(usage_data: UsageDataRequest):
   """
-  Given usage data, select the most appropriate intervention using LLM.
+  Given usage data, select the most appropriate interventions using LLM.
   """
-  interventionId = llm_intervention(usage_data.model_dump())
-  result = get_intervention_content(
-    intervention_id=interventionId,
-    user_context={}
-  ) if interventionId else None
+  interventionIds = llm_intervention(usage_data.model_dump())
+  result = []
+  for interventionId in interventionIds:
+    content = get_intervention_content_old(
+      intervention_id=interventionId,
+      user_context={}
+    )
+    result.append(content)
+  result = result if result else None
 
-  return {"success": True, "result": result, "intervention_id" : interventionId}
+  return {"success": True, "result": result, "intervention_ids" : interventionIds}
