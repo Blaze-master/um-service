@@ -13,13 +13,14 @@ class InterventionSelectRequest(BaseModel):
   user_context: Optional[Dict[str, Any]] = None
 
 class SignalRecord(BaseModel):
-  signalId: str
+  signalId: str  
+  serviceCategory: str
+  appId : str
   createdAt: str
 
 class MilestoneRecord(BaseModel):
   milestoneId: str
   serviceCategory: str
-  serviceSubCategory : str
   appId : str
   createdAt: str
 
