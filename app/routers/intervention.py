@@ -19,6 +19,8 @@ class SignalRecord(BaseModel):
 class MilestoneRecord(BaseModel):
   milestoneId: str
   serviceCategory: str
+  serviceSubCategory : str
+  appId : str
   createdAt: str
 
 class InterventionRecord(BaseModel):
