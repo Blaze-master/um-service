@@ -17,6 +17,12 @@ class Settings(BaseSettings):
         pathm = Path("app/data/intervention_ids.json")
         with open(pathm, "r") as f:
             return json.load(f)
+    
+    @property
+    def milestones_to_intervention(self):
+        pathm = Path("app/data/milestones_to_intervention_types.json")
+        with open(pathm, "r") as f:
+            return json.load(f)
 
 
 

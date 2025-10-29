@@ -23,6 +23,10 @@ finance.tier1_app_low_activity.REACTIVATION
 {prioritization_guidelines}
 
 
+## List of possible intervention IDs
+{intervention_ids}
+
+
 ### RELEVANT INFORMATION
 You are given two pieces of information:
 
@@ -40,9 +44,6 @@ You are given two pieces of information:
 ## USAGE DATA
 {usage_data}
 
-
-## List of possible intervention IDs
-{intervention_ids}
 ---
 """
 
