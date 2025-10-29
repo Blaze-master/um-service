@@ -43,9 +43,9 @@ def llm_intervention(usage_data: Any) -> str:
   interventions, residuals = get_intervention_for_reward_milestones(usage_data["current"], settings.milestones_to_intervention)
   usage_data["current"] = residuals
   params = {
-    "usage_data" : usage_data, 
-    "milestone_to_intervention_types" : settings.milestones_to_intervention, 
-    "intervention_types" : INTERVENTION_TYPES, 
+    "usage_data" : usage_data,
+    "intervention_ids" : settings.intervention_ids,
+    "intervention_types" : INTERVENTION_TYPES,
     "prioritization_guidelines" : PRIORITIZATION_GUIDELINES,
     "engagement_flow" : ENGAGEMENT_FLOW
     }

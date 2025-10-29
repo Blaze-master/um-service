@@ -5,15 +5,8 @@ Your task is to decide which intervention should be triggered next for a user, b
 ### TASK
 Using the provided engagement flow, guidelines, and relevant information:
 
-- Determine which *single intervention* should be triggered next.
-- Construct the final *intervention ID* in this exact format:
-
-  **[service_category].[milestone].[intervention_type]**
-
-  Examples:
-  - UNITI.goal_setting_completed.CELEBRATE
-  - finance.tier1_app_low_activity.REACTIVATION
-  - education.kyc_started_abandoned.HOW
+- Determine which *single intervention* should be triggered next, based on the list of possible interventions given
+- Your response should be grounded, i.e it must be from the list of possible intervention ids
 
 ### OUTPUT FORMAT
 Return *only* the final intervention_id string, with no explanations, extra words, or formatting.
@@ -31,11 +24,11 @@ finance.tier1_app_low_activity.REACTIVATION
 
 
 ### RELEVANT INFORMATION
-You are given three pieces of information:
+You are given two pieces of information:
 
-1. *Milestone to Intervention Type Mapping* — lists possible mappings that can be used to guide intervention type selection from current milestones.
-2. *Intervention Type Definitions* — explains what each intervention type means and when it is used.
-3. *Usage Data* — includes current milestones to select from, past milestones, and past interventions.
+1. *Intervention Type Definitions* — explains what each intervention type means and when it is used.
+2. *Usage Data* — includes current milestones to select from, past milestones, and past interventions.
+
 
 ---
 
@@ -44,14 +37,12 @@ You are given three pieces of information:
 
 ---
 
-## MILESTONE → INTERVENTION TYPE MAPPING
-{milestone_to_intervention_types}
-
----
-
 ## USAGE DATA
 {usage_data}
 
+
+## List of possible intervention IDs
+{intervention_ids}
 ---
 """
 
