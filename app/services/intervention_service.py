@@ -4,7 +4,7 @@ from .llm_service import prompt_llm
 from ..utils.prompts import INTERVENTION_PROMPT, INTERVENTION_TYPES, PRIORITIZATION_GUIDELINES, ENGAGEMENT_FLOW
 from pathlib import Path
 from typing import Optional, Dict, Any
-
+import psycopg2
 
 # Load intervention library once at startup
 LIBRARY_PATH = Path(__file__).resolve().parent.parent / "data" / "intervention_library.json"
@@ -51,3 +51,19 @@ def llm_intervention(usage_data: Any) -> str:
     }
   interventions.append(prompt_llm(INTERVENTION_PROMPT,params))
   return interventions
+
+
+def get_message(intervention_id, conn, cur):
+  query = "SELECT * FROM message_templates WHERE title=%s"
+  cur.execute(query, (intervention_id,))
+  return cur.fetchone()
+
+def get_all_messages(intervention_ids):
+  settings = get_settings()
+  conn = psycopg2.connect(settings.db_url)
+  cur = conn.cursor()
+  results = []
+  for intervention_id in intervention_ids:
+    results.append(get_message(intervention_id, conn, cur))
+  cur.close(), conn.close()
+  return results

@@ -8,6 +8,7 @@ class Settings(BaseSettings):
     model_api_key : str
     model_name : str
     model_provider : str
+    db_url : str
     class Config:
         env_file = ".env"
         extra = "allow"
