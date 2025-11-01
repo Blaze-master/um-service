@@ -1,7 +1,7 @@
 from fastapi import APIRouter
 from pydantic import BaseModel
 from typing import List, Optional, Dict, Any
-from app.services.intervention_service import resolve_intervention, llm_intervention
+from app.services.intervention_service import resolve_intervention, llm_intervention, get_all_messages
 from app.services.message_service import get_intervention_content, get_intervention_content_old
 
 router = APIRouter(prefix="/intervention", tags=["Intervention"])
@@ -63,13 +63,7 @@ def llm_select_intervention(usage_data: UsageDataRequest):
   Given usage data, select the most appropriate interventions using LLM.
   """
   interventionIds = llm_intervention(usage_data.model_dump())
-  result = []
-  for interventionId in interventionIds:
-    content = get_intervention_content_old(
-      intervention_id=interventionId,
-      user_context={}
-    )
-    result.append(content)
+  result = get_all_messages(interventionIds)
   result = result if result else None
 
   return {"success": True, "result": result, "intervention_ids" : interventionIds}
