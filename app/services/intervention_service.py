@@ -53,10 +53,12 @@ def llm_intervention(usage_data: Any) -> str:
   return interventions
 
 
-def get_message(intervention_id, conn, cur):
-  query = "SELECT * FROM message_templates WHERE title=%s"
-  cur.execute(query, (intervention_id,))
-  return cur.fetchone()
+def get_message(intervention_id: str, conn, cur):
+  cols = ["title", "subject", "content", "category"]
+  query = f"SELECT {', '.join(cols)} FROM message_templates WHERE LOWER(title)='{intervention_id.lower()}'"
+  cur.execute(query)
+  row = cur.fetchone()
+  return dict(zip(cols, row)) if row else None
 
 def get_all_messages(intervention_ids):
   settings = get_settings()

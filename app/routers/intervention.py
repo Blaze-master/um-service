@@ -26,6 +26,7 @@ class MilestoneRecord(BaseModel):
 
 class InterventionRecord(BaseModel):
   interventionId: str
+  appId: str
   createdAt: str
 
 class UsageDataRequest(BaseModel):
