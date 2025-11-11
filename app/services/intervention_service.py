@@ -49,16 +49,20 @@ def llm_intervention(usage_data: Any) -> str:
     "prioritization_guidelines" : PRIORITIZATION_GUIDELINES,
     "engagement_flow" : ENGAGEMENT_FLOW
     }
-  interventions.append(prompt_llm(INTERVENTION_PROMPT,params))
+  interventions.append(prompt_llm(INTERVENTION_PROMPT,params).lower())
   return interventions
 
 
 def get_message(intervention_id: str, conn, cur):
-  cols = ["title", "subject", "content", "category"]
-  query = f"SELECT {', '.join(cols)} FROM message_templates WHERE LOWER(title)='{intervention_id.lower()}'"
+  data = {"interventionId": intervention_id}
+  cols = ["subject", "content", "category"]
+  for col in cols: data[col] = None
+  query = f"SELECT {', '.join(cols)} FROM message_templates WHERE LOWER(title)='{intervention_id}'"
   cur.execute(query)
   row = cur.fetchone()
-  return dict(zip(cols, row)) if row else None
+  for i,cell in enumerate(row):
+    data[cols[i]] = row[i]
+  return data
 
 def get_all_messages(intervention_ids):
   settings = get_settings()
@@ -69,3 +73,16 @@ def get_all_messages(intervention_ids):
     results.append(get_message(intervention_id, conn, cur))
   cur.close(), conn.close()
   return results
+
+def fill_message_templates(messages, usage_data):
+  filled_messages = []
+  for message in messages:
+    subject = message["subject"].format(**usage_data["metadata"]) if message["subject"] else None
+    content = message["content"].format(**usage_data["metadata"]) if message["content"] else None
+    filled_messages.append({
+      "interventionId": message["interventionId"],
+      "subject": subject,
+      "content": content,
+      "category": message["category"]
+    })
+  return filled_messages
