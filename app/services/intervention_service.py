@@ -33,7 +33,7 @@ def get_intervention_for_reward_milestones(milestones, m_to_i):
   residual_milestones = []
   for milestone in milestones:
     if "REWARD" in m_to_i.get(milestone["milestoneId"], []):
-      reward_interventions.append(f"{milestone['serviceCategory']}.{milestone['milestoneId']}.REWARD")
+      reward_interventions.append((f"{milestone['serviceCategory']}.{milestone['milestoneId']}.REWARD", milestone['appId']))
     else:
       residual_milestones.append(milestone)
   return reward_interventions, residual_milestones
@@ -49,8 +49,9 @@ def llm_intervention(usage_data: Any) -> str:
     "prioritization_guidelines" : PRIORITIZATION_GUIDELINES,
     "engagement_flow" : ENGAGEMENT_FLOW
     }
-  interventions.append(prompt_llm(INTERVENTION_PROMPT,params).lower())
-  return interventions
+  interventions.append(prompt_llm(INTERVENTION_PROMPT,params))
+  interventions, app_ids = zip(*interventions)
+  return interventions, app_ids
 
 
 def get_message(intervention_id: str, conn, cur):
@@ -74,12 +75,13 @@ def get_all_messages(intervention_ids):
   cur.close(), conn.close()
   return results
 
-def fill_message_templates(messages, usage_data):
+def fill_message_templates(messages, appIds,usage_data):
   filled_messages = []
-  for message in messages:
+  for message, appID in zip(messages, appIds):
     subject = message["subject"].format(**usage_data["metadata"]) if message["subject"] else None
     content = message["content"].format(**usage_data["metadata"]) if message["content"] else None
     filled_messages.append({
+      "appId": appID,
       "interventionId": message["interventionId"],
       "subject": subject,
       "content": content,

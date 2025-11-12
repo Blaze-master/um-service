@@ -68,9 +68,9 @@ def llm_select_intervention(usage_data: UsageDataRequest):
   """
   Given usage data, select the most appropriate interventions using LLM.
   """
-  interventionIds = llm_intervention(usage_data.model_dump())
+  interventionIds, appIds = llm_intervention(usage_data.model_dump())
   message_content = get_all_messages(interventionIds)
-  result = fill_message_templates(message_content, usage_data.model_dump())
+  result = fill_message_templates(message_content, appIds, usage_data.model_dump())
   result = result if result else None
 
   return {"success": True, "result": result}

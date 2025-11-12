@@ -9,10 +9,14 @@ Using the provided engagement flow, guidelines, and relevant information:
 - Your response should be grounded, i.e it must be from the list of possible intervention ids
 
 ### OUTPUT FORMAT
-Return *only* the final intervention_id string, with no explanations, extra words, or formatting.
+Return the final intervention_id and the respective appId for that intervention_id in the following json output format.
+```json
+{{"intervention_id": "<intervention_id>","app_id": "<app_id>"}}
+```
+Return only the json object, without any additional text or explanation.
 
 Example:
-finance.tier1_app_low_activity.REACTIVATION
+{{"intervention_id": "finance.tier1_app_low_activity.REACTIVATION","app_id": "app_12345"}}
 
 
 ### EXPECTED USER ENGAGEMENT FLOW
