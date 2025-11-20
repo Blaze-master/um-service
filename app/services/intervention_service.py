@@ -33,7 +33,7 @@ def get_intervention_for_reward_milestones(milestones, m_to_i):
   residual_milestones = []
   for milestone in milestones:
     if "REWARD" in m_to_i.get(milestone["milestoneId"], []):
-      reward_interventions.append((f"{milestone['serviceCategory']}.{milestone['milestoneId']}.REWARD", milestone['appId']))
+      reward_interventions.append((f"{milestone['serviceCategory']}.{milestone['milestoneId']}.reward", milestone['appId']))
     else:
       residual_milestones.append(milestone)
   return reward_interventions, residual_milestones
@@ -61,8 +61,9 @@ def get_message(intervention_id: str, conn, cur):
   query = f"SELECT {', '.join(cols)} FROM message_templates WHERE LOWER(title)='{intervention_id}'"
   cur.execute(query)
   row = cur.fetchone()
-  for i,cell in enumerate(row):
-    data[cols[i]] = row[i]
+  if row:
+    for i,cell in enumerate(row):
+      data[cols[i]] = row[i]
   return data
 
 def get_all_messages(intervention_ids):
